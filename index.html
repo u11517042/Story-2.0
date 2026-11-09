@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mnanak na qalang 繪本</title>
+<style>
+:root{--bg:#1c1410;--fg:#f3e6cf;--accent:#d9a441;--paper:#efe2c4;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(circle at 50% 40%,#3a2819,var(--bg));color:var(--fg);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;overflow:hidden;user-select:none;-webkit-user-select:none}
+#book{display:flex;align-items:center;justify-content:center;gap:10px;width:100%}
+:root{--aw:clamp(52px,9vw,110px)}
+.arrow{position:relative;z-index:100;width:var(--aw);flex:none;background:none;border:0;padding:0;cursor:pointer;transition:transform .2s,opacity .2s}
+.arrow img{width:100%;display:block;mix-blend-mode:screen;pointer-events:none;filter:drop-shadow(0 0 6px rgba(217,164,65,.6))}
+#prev:hover:not(:disabled){transform:translateX(-6px) scale(1.08)}
+#next:hover:not(:disabled){transform:translateX(6px) scale(1.08)}
+.arrow:hover:not(:disabled){background:none}
+.arrow:disabled{opacity:.15;cursor:default}
+#stage{z-index:1;width:min(calc(100vw - 2 * var(--aw) - 28px),calc((100vh - 130px) * 4 / 3));aspect-ratio:4/3;perspective:2200px;position:relative;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+.page{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.25,1);border-radius:4px 8px 8px 4px}
+.page.flipped{transform:rotateY(-180deg);opacity:0;pointer-events:none;transition:transform .9s cubic-bezier(.45,.05,.25,1),opacity 0s linear .9s}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:inherit;overflow:hidden}
+.front img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.back{transform:rotateY(180deg);background:linear-gradient(90deg,#c9b98f,var(--paper) 30%)}
+.front::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.28),transparent 5%);pointer-events:none}
+#bar{display:flex;align-items:center;gap:16px;font-size:15px}
+button{background:transparent;color:var(--fg);border:1px solid var(--accent);border-radius:999px;padding:8px 18px;font-size:15px;cursor:pointer;font-family:inherit}
+button:hover:not(:disabled){background:var(--accent);color:#2a1a0c}
+button:disabled{opacity:.3;cursor:default}
+#count{min-width:70px;text-align:center;letter-spacing:.08em}
+#hint{font-size:12px;opacity:.55}
+@media (prefers-reduced-motion:reduce){.page{transition:none}}
+</style>
+</head>
+<body>
+<div id="book">
+<button class="arrow" id="prev" aria-label="上一頁"><img alt="" src="images/left.jpg"></button>
+<div id="stage">
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 1 頁" src="images/0.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 2 頁" src="images/1.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 3 頁" src="images/2.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 4 頁" src="images/3.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 5 頁" src="images/4.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 6 頁" src="images/5.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 7 頁" src="images/6.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 8 頁" src="images/7.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 9 頁" src="images/8.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 10 頁" src="images/9.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 11 頁" src="images/10.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 12 頁" src="images/11.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 13 頁" src="images/12.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 14 頁" src="images/13.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 15 頁" src="images/14.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 16 頁" src="images/15.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 17 頁" src="images/16.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 18 頁" src="images/17.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 19 頁" src="images/18.jpg"></div><div class="face back"></div></div>
+
+<div class="page">
+  <div class="face front"><img alt="繪本第 20 頁" src="images/19.jpg"></div><div class="face back"></div></div>
+
+
+<!-- 背景音樂 au0–au19、配音 sp0–sp19 -->
+<audio id="au0" preload="auto" src="music/music0.mp3"></audio>
+<audio id="sp0" preload="auto" src="speech/speech0.mp3"></audio>
+<audio id="au1" preload="auto" src="music/music1.mp3"></audio>
+<audio id="sp1" preload="auto" src="speech/speech1.mp3"></audio>
+<audio id="au2" preload="auto" src="music/music2.mp3"></audio>
+<audio id="sp2" preload="auto" src="speech/speech2.mp3"></audio>
+<audio id="au3" preload="auto" src="music/music3.mp3"></audio>
+<audio id="sp3" preload="auto" src="speech/speech3.mp3"></audio>
+<audio id="au4" preload="auto" src="music/music4.mp3"></audio>
+<audio id="sp4" preload="auto" src="speech/speech4.mp3"></audio>
+<audio id="au5" preload="auto" src="music/music5.mp3"></audio>
+<audio id="sp5" preload="auto" src="speech/speech5.mp3"></audio>
+<audio id="au6" preload="auto" src="music/music6.mp3"></audio>
+<audio id="sp6" preload="auto" src="speech/speech6.mp3"></audio>
+<audio id="au7" preload="auto" src="music/music7.mp3"></audio>
+<audio id="sp7" preload="auto" src="speech/speech7.mp3"></audio>
+<audio id="au8" preload="auto" src="music/music8.mp3"></audio>
+<audio id="sp8" preload="auto" src="speech/speech8.mp3"></audio>
+<audio id="au9" preload="auto" src="music/music9.mp3"></audio>
+<audio id="sp9" preload="auto" src="speech/speech9.mp3"></audio>
+<audio id="au10" preload="auto" src="music/music10.mp3"></audio>
+<audio id="sp10" preload="auto" src="speech/speech10.mp3"></audio>
+<audio id="au11" preload="auto" src="music/music11.mp3"></audio>
+<audio id="sp11" preload="auto" src="speech/speech11.mp3"></audio>
+<audio id="au12" preload="auto" src="music/music12.mp3"></audio>
+<audio id="sp12" preload="auto" src="speech/speech12.mp3"></audio>
+<audio id="au13" preload="auto" src="music/music13.mp3"></audio>
+<audio id="sp13" preload="auto" src="speech/speech13.mp3"></audio>
+<audio id="au14" preload="auto" src="music/music14.mp3"></audio>
+<audio id="sp14" preload="auto" src="speech/speech14.mp3"></audio>
+<audio id="au15" preload="auto" src="music/music15.mp3"></audio>
+<audio id="sp15" preload="auto" src="speech/speech15.mp3"></audio>
+<audio id="au16" preload="auto" src="music/music16.mp3"></audio>
+<audio id="sp16" preload="auto" src="speech/speech16.mp3"></audio>
+<audio id="au17" preload="auto" src="music/music17.mp3"></audio>
+<audio id="sp17" preload="auto" src="speech/speech17.mp3"></audio>
+<audio id="au18" preload="auto" src="music/music18.mp3"></audio>
+<audio id="sp18" preload="auto" src="speech/speech18.mp3"></audio>
+<audio id="au19" preload="auto" src="music/music19.mp3"></audio>
+<audio id="sp19" preload="auto" src="speech/speech19.mp3"></audio>
+</div>
+<button class="arrow" id="next" aria-label="下一頁"><img alt="" src="images/right.jpg"></button>
+</div>
+<div id="bar">
+<span id="count"></span>
+<button id="mute" aria-label="音樂開關">🎵</button>
+<button id="vo" aria-label="配音開關">🗣</button>
+<button id="replay" aria-label="重播配音">↻</button>
+<button id="fs" aria-label="全螢幕">⛶</button>
+</div>
+<div id="hint">點左右兩邊的箭頭、按 ← → 鍵,或左右滑動翻頁(第一次點擊後開始播放配音與音樂)</div>
+<script>
+(function(){
+var pages=[].slice.call(document.querySelectorAll('.page')),n=pages.length,cur=0;
+
+var tracks=[].slice.call(document.querySelectorAll('audio[id^=au]')),voices=[].slice.call(document.querySelectorAll('audio[id^=sp]'));
+var musicOn=true,voiceOn=true,playing=-1,started=false,fades={},speaking=false;
+var HI=0.6,LO=0.18;
+tracks.forEach(function(a){a.loop=true;a.volume=0;});
+voices.forEach(function(v,i){v.loop=false;v.volume=1;v.onended=function(){if(i===playing){speaking=false;if(musicOn)fade(tracks[i],HI,1200);}};});
+function fade(a,to,ms,done){
+  clearInterval(fades[a.id]);
+  var from=a.volume,steps=20,k=0;
+  fades[a.id]=setInterval(function(){
+    k++;a.volume=Math.max(0,Math.min(1,from+(to-from)*k/steps));
+    if(k>=steps){clearInterval(fades[a.id]);if(done)done();}
+  },ms/steps);
+}
+function safePlay(a){var p=a.play();if(p&&p.catch)p.catch(function(){});}
+function playVoice(i){
+  var v=voices[i];v.pause();v.currentTime=0;
+  if(voiceOn){speaking=true;if(musicOn)fade(tracks[i],LO,500);safePlay(v);}
+  else{speaking=false;if(musicOn)fade(tracks[i],HI,800);}
+}
+function playFor(i){
+  if(!started||playing===i)return;
+  if(playing>=0){
+    var o=tracks[playing];fade(o,0,700,function(){o.pause();});
+    voices[playing].pause();voices[playing].currentTime=0;
+  }
+  var a=tracks[i];playing=i;a.currentTime=0;a.volume=0;safePlay(a);
+  if(musicOn)fade(a,HI,1000);
+  playVoice(i);
+}
+function start(){if(started)return;started=true;playing=-1;playFor(cur);}
+document.addEventListener('pointerdown',start,{once:true});
+document.addEventListener('keydown',start,{once:true});
+var muteBtn=document.getElementById('mute'),voBtn=document.getElementById('vo'),rp=document.getElementById('replay');
+muteBtn.onclick=function(e){
+  e.stopPropagation();musicOn=!musicOn;muteBtn.textContent=musicOn?'🎵':'🔇';muteBtn.style.opacity=musicOn?1:.5;
+  if(playing>=0)fade(tracks[playing],musicOn?(speaking?LO:HI):0,400);
+};
+voBtn.onclick=function(e){
+  e.stopPropagation();voiceOn=!voiceOn;voBtn.style.opacity=voiceOn?1:.5;
+  if(playing>=0){if(voiceOn)playVoice(playing);else{voices[playing].pause();speaking=false;if(musicOn)fade(tracks[playing],HI,600);}}
+};
+rp.onclick=function(e){e.stopPropagation();if(!started)start();else if(playing>=0){voiceOn=true;voBtn.style.opacity=1;playVoice(playing);}};
+var count=document.getElementById('count'),prev=document.getElementById('prev'),next=document.getElementById('next');
+function render(){
+  pages.forEach(function(p,i){
+    p.classList.toggle('flipped',i<cur);
+    p.style.zIndex=i<cur?i:n-i;
+  });
+  count.textContent=(cur+1)+' / '+n;
+  prev.disabled=cur===0;
+  next.disabled=cur===n-1;
+  playFor(cur);
+}
+function go(d){var t=cur+d;if(t<0||t>=n)return;cur=t;render();}
+prev.onclick=function(){go(-1)};
+next.onclick=function(){go(1)};
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key===' ')go(1);
+  if(e.key==='ArrowLeft')go(-1);
+});
+var stage=document.getElementById('stage'),sx=null;
+stage.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+stage.addEventListener('touchend',function(e){
+  if(sx===null)return;
+  var dx=e.changedTouches[0].clientX-sx;sx=null;
+  if(Math.abs(dx)>40){go(dx<0?1:-1);e.preventDefault();}
+});
+document.getElementById('fs').onclick=function(){
+  try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen();}catch(err){}
+};
+render();
+})();
+</script>
+</body>
+</html>
