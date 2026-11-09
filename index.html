@@ -3,14 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&family=Noto+Serif+TC:wght@500;700&display=swap">
 <title>mnanak na qalang 繪本</title>
 <style>
 :root{--bg:#1c1410;--fg:#f3e6cf;--accent:#d9a441;--paper:#efe2c4;--aw:clamp(44px,9vw,110px);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box}
+body::before,body::after{content:"";position:fixed;left:0;right:0;height:20px;z-index:0;pointer-events:none;background:#8b2a22 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='20'%3E%3Cpolygon points='20,2 38,10 20,18 2,10' fill='none' stroke='%23d9a441' stroke-width='2'/%3E%3Ccircle cx='20' cy='10' r='2.2' fill='%23fff'/%3E%3Ccircle cx='0' cy='10' r='1.6' fill='%23fff'/%3E%3Ccircle cx='40' cy='10' r='1.6' fill='%23fff'/%3E%3C/svg%3E") repeat-x center}
+body::before{top:0;box-shadow:0 3px 10px rgba(0,0,0,.5)}
+body::after{bottom:0;box-shadow:0 -3px 10px rgba(0,0,0,.5)}
+body>*{position:relative}
+#book{z-index:auto}
+#title{margin-bottom:10px;text-align:center;line-height:1.1}
+#title h1{margin:0;font:400 clamp(24px,4.2vw,40px)/1.1 "Pacifico","Brush Script MT",cursive;color:#f2b84b;text-shadow:0 2px 0 #7a3b10,0 4px 14px rgba(242,184,75,.35)}
+#title p{margin:4px 0 0;font:500 clamp(11px,1.5vw,14px) "Noto Serif TC",serif;letter-spacing:.35em;color:#e9d4ab;opacity:.85}
+#progress{margin-top:10px;width:min(60vw,360px);height:6px;border-radius:99px;background:rgba(255,255,255,.14);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.5)}
+#pbar{display:block;height:100%;width:5%;background:linear-gradient(90deg,#d9a441,#f2d27a);border-radius:99px;transition:width .6s ease}
 html,body{height:100%;margin:0;max-width:100%;overflow-x:hidden}
-body{background:radial-gradient(circle at 50% 40%,#3a2819,var(--bg));color:var(--fg);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;user-select:none;-webkit-user-select:none}
+body{padding:26px 0;background:
+ radial-gradient(1.5px 1.5px at 8% 18%,#fff9 50%,transparent),radial-gradient(1px 1px at 22% 60%,#fff8 50%,transparent),radial-gradient(2px 2px at 35% 12%,#ffe7a8cc 50%,transparent),radial-gradient(1px 1px at 52% 80%,#fff8 50%,transparent),radial-gradient(1.5px 1.5px at 67% 25%,#fff9 50%,transparent),radial-gradient(2px 2px at 81% 70%,#ffe7a8cc 50%,transparent),radial-gradient(1px 1px at 92% 15%,#fff8 50%,transparent),radial-gradient(1px 1px at 15% 90%,#fff8 50%,transparent),radial-gradient(1.5px 1.5px at 75% 92%,#fff9 50%,transparent),
+ radial-gradient(ellipse at 50% 45%,#4a3020 0%,#2a1a12 55%,#150d09 100%);color:var(--fg);font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;user-select:none;-webkit-user-select:none}
 #book{display:flex;align-items:center;justify-content:center;gap:8px;width:100%}
-#stage{position:relative;z-index:1;width:min(calc(100vw - 2*var(--aw) - 24px),calc((100vh - 150px)*4/3));aspect-ratio:4/3;perspective:2200px;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+#stage{position:relative;z-index:1;width:min(calc(100vw - 2*var(--aw) - 48px),calc((100vh - 250px)*4/3));aspect-ratio:4/3;perspective:2200px;filter:drop-shadow(0 14px 30px rgba(0,0,0,.55))}
+#stage::before{content:"";position:absolute;inset:-12px;z-index:-1;border-radius:12px;background:linear-gradient(135deg,#5a3520,#3a2214);box-shadow:inset 0 0 0 3px #d9a441,inset 0 0 0 5px #3a2214,0 0 0 2px #120a06}
 .page{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.45,.05,.25,1);border-radius:4px 8px 8px 4px}
 .page.flipped{transform:rotateY(-180deg);opacity:0;pointer-events:none;transition:transform .9s cubic-bezier(.45,.05,.25,1),opacity 0s linear .9s}
 .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:inherit;overflow:hidden}
@@ -22,23 +36,30 @@ body{background:radial-gradient(circle at 50% 40%,#3a2819,var(--bg));color:var(-
 #overlay.show{display:flex}
 .spin{width:34px;height:34px;border:4px solid rgba(243,230,207,.25);border-top-color:var(--accent);border-radius:50%;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.arrow{position:relative;z-index:100;width:var(--aw);flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;color:var(--fg);font-family:inherit;transition:transform .2s,opacity .2s}
-.arrow img{width:100%;display:block;mix-blend-mode:screen;pointer-events:none;filter:drop-shadow(0 0 6px rgba(217,164,65,.6))}
+.arrow{mix-blend-mode:screen;position:relative;z-index:100;width:var(--aw);flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;color:var(--fg);font-family:inherit;transition:transform .2s,opacity .2s}
+.arrow img{width:100%;display:block;pointer-events:none}
 #prev:hover:not(:disabled){transform:translateX(-6px) scale(1.08)}
 #next:hover:not(:disabled){transform:translateX(6px) scale(1.08)}
 .alabel{font-size:clamp(11px,1.6vw,15px);letter-spacing:.08em;white-space:nowrap;text-shadow:0 1px 4px rgba(0,0,0,.7)}
 .arrow:disabled{opacity:.15;cursor:default}
-#bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:0 8px;max-width:100%;font-size:14px}
-.ctl{background:transparent;color:var(--fg);border:1px solid var(--accent);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;font-family:inherit}
-.ctl:hover{background:var(--accent);color:#2a1a0c}
-.ctl[aria-pressed="true"]{background:rgba(217,164,65,.3)}
-#count{min-width:96px;text-align:center;letter-spacing:.06em}
-#hint{font-size:12px;opacity:.6;text-align:center;padding:0 12px}
+#bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:8px 14px;max-width:calc(100% - 16px);font-size:14px;background:rgba(20,12,8,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border:1px solid rgba(217,164,65,.45);border-radius:26px;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.ctl{transition:background .2s,transform .15s;background:rgba(217,164,65,.08);color:var(--fg);border:1px solid var(--accent);border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer;font-family:inherit}
+.ctl:hover{background:linear-gradient(180deg,#f2d27a,#d9a441);color:#2a1a0c;transform:translateY(-1px)}
+.ctl[aria-pressed="true"]{background:rgba(217,164,65,.32);box-shadow:inset 0 0 0 1px var(--accent)}
+.ctl:focus-visible,.arrow:focus-visible{outline:2px solid #f2d27a;outline-offset:3px}
+@keyframes nl{50%{transform:translateX(-5px)}}
+@keyframes nr{50%{transform:translateX(5px)}}
+#prev:not(:disabled) img{animation:nl 1.8s ease-in-out infinite}
+#next:not(:disabled) img{animation:nr 1.8s ease-in-out infinite}
+#count{min-width:96px;text-align:center;letter-spacing:.08em;font-family:"Noto Serif TC",serif;font-weight:700;color:#f2d27a}
+#hint{font-size:12px;opacity:.55;max-width:92vw;text-align:center;padding:0 12px}
 #dbg{display:none;position:fixed;left:6px;bottom:6px;max-width:92vw;max-height:40vh;overflow:auto;margin:0;background:rgba(0,0,0,.85);color:#9f9;font:11px/1.4 monospace;padding:8px;border-radius:6px;z-index:999;user-select:text;white-space:pre-wrap}
+@media (max-width:600px){#book{flex-wrap:wrap;gap:22px 70px}#stage{order:0;flex:none;width:min(calc(100vw - 44px),calc((100vh - 340px)*4/3))}#prev{order:1}#next{order:2}.arrow{width:74px;flex-direction:row;gap:6px}.arrow img{width:44px}.alabel{font-size:14px}#prev{flex-direction:row}}
 @media (prefers-reduced-motion:reduce){.page{transition:none}}
 </style>
 </head>
 <body>
+<header id="title"><h1>mnanak na qalang</h1><p>繪 本</p></header>
 <div id="book">
 <button class="arrow" id="prev" aria-label="上一頁"><img alt="" src="images/left.jpg"><span class="alabel">上一頁</span></button>
 <div id="stage">
@@ -46,6 +67,7 @@ body{background:radial-gradient(circle at 50% 40%,#3a2819,var(--bg));color:var(-
 </div>
 <button class="arrow" id="next" aria-label="下一頁"><img alt="" src="images/right.jpg"><span class="alabel">下一頁</span></button>
 </div>
+<div id="progress" role="progressbar" aria-label="閱讀進度" aria-valuemin="1" aria-valuemax="20" aria-valuenow="1"><i id="pbar"></i></div>
 <div id="bar">
 <span id="count" role="status" aria-live="polite">第 1 / 20 頁</span>
 <button class="ctl" id="pp" aria-pressed="false" aria-label="播放／暫停">⏯ 播放／暫停</button>
@@ -142,6 +164,7 @@ function render(){
   pages.forEach(function(p,i){p.classList.toggle('flipped',i<cur);p.style.zIndex=i<cur?i:N-i;
     if(i===cur)p.setAttribute('aria-current','page');else p.removeAttribute('aria-current');});
   $('count').textContent='第 '+(cur+1)+' / '+N+' 頁';
+  $('pbar').style.width=((cur+1)/N*100)+'%';$('progress').setAttribute('aria-valuenow',cur+1);
   var pv=$('prev'),nx=$('next');
   pv.disabled=cur===0;nx.disabled=cur===N-1;
   pv.setAttribute('aria-disabled',cur===0);nx.setAttribute('aria-disabled',cur===N-1);
@@ -211,6 +234,7 @@ applyVol();render();
 </script>
 </body>
 </html>
+
 
 </body>
 </html>
